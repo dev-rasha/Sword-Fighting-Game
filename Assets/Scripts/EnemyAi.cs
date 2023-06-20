@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -123,11 +123,14 @@ public class EnemyAi : MonoBehaviour
 
         readytoAttack = false;
         Attacking = true;
+        
         if(Attacking)
-        {ChangeEnemyAnimationState(ATTACKING);}
+        {
+            ChangeEnemyAnimationState(ATTACKING);
+            DamageThePlayer();
+        }
 
         Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        Invoke(nameof(DamageThePlayer), attackDelay);
     }
 
     private void ResetAttack()
@@ -150,7 +153,8 @@ public class EnemyAi : MonoBehaviour
 
     void DamageThePlayer()
     {
-        p = GetComponent<PlayerController>();
+        // p = GetComponent<PlayerController>();
+        p = FindObjectOfType<PlayerController>();
         p.DamagePlayer(attackDamage);
     }
 
