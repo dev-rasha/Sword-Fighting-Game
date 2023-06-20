@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlayerController : MonoBehaviour
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public float crouchSpeed = 3;
     public float crouchYScale;
     public float startYScale;
+    public KeyCode Skill1Key;
 
     Vector3 _PlayerVelocity;
 
@@ -34,6 +36,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particles")]
     public GameObject Water;
+
+    [Header("Images")]
+    public Image Healthbar;
+    public Image CooldownBar1;
 
     float xRotation = 0f;
 
@@ -63,6 +69,7 @@ public class PlayerController : MonoBehaviour
 
         SetAnimations();
         ActiveParticle();
+        skillCooldownBar();
     }
 
     void FixedUpdate() 
@@ -207,6 +214,8 @@ public class PlayerController : MonoBehaviour
     bool readyToAttack = true;
     [SerializeField]
     bool readyToSkill = true;
+    [SerializeField]
+    bool onCooldown = true;
     int attackCount;
 
     public void Attack()
@@ -285,9 +294,29 @@ public class PlayerController : MonoBehaviour
         Destroy(projectile, 2);
     }
 
+    private void skillCooldownBar()
+    {
+        if(Input.GetKeyDown(Skill1Key))
+        {
+            CooldownBar1.fillAmount = 0;
+            onCooldown = true;
+        }
+
+        if (onCooldown)
+        {
+            CooldownBar1.fillAmount += 1 / skillCooldown * Time.deltaTime;
+
+            if (CooldownBar1.fillAmount <= 1)
+            {
+                CooldownBar1.fillAmount = 1;
+            }
+        }
+    }
+
     private void ResetCooldown()
     {
         readyToSkill = true;
+        onCooldown = false;
     }
 
     void AttackRaycast()
@@ -302,5 +331,6 @@ public class PlayerController : MonoBehaviour
     public void DamagePlayer(int damage)
     {
         health -= damage;
+        Healthbar.fillAmount = health / 100f;
     }
 }

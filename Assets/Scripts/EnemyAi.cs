@@ -129,6 +129,10 @@ public class EnemyAi : MonoBehaviour
             ChangeEnemyAnimationState(ATTACKING);
             DamageThePlayer();
         }
+        else
+        {
+            ChangeEnemyAnimationState(IDLE);
+        }
 
         Invoke(nameof(ResetAttack), timeBetweenAttacks);
     }
