@@ -258,13 +258,13 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator IncrementCooldownBar()
     {
-        float incrementAmount = 0.01f;
-        float targetFillAmount = 1f;
+        float incrementAmount = 0.02f;
+        float targetFillAmount = 1f;    
 
         while (CooldownBar1.fillAmount < targetFillAmount)
         {
+            yield return new WaitForSeconds(0.1f);
             CooldownBar1.fillAmount += incrementAmount;
-            yield return new WaitForSeconds(0.01f);
         }
 
         CooldownBar1.fillAmount = targetFillAmount;
