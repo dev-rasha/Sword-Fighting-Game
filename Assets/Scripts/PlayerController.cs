@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     public float crouchSpeed = 3;
     public float crouchYScale;
     public float startYScale;
-    public KeyCode Skill1Key;
 
     Vector3 _PlayerVelocity;
 
@@ -69,7 +68,6 @@ public class PlayerController : MonoBehaviour
 
         SetAnimations();
         ActiveParticle();
-        skillCooldownBar();
     }
 
     void FixedUpdate() 
@@ -200,7 +198,7 @@ public class PlayerController : MonoBehaviour
     public GameObject hitEffect;
 
     [Header("Skills")]
-    public float skillCooldown = 5f;
+    public float skillCooldown;
     public Transform attackPoint;
     public Transform Cam;
     public GameObject Waves;
@@ -262,8 +260,21 @@ public class PlayerController : MonoBehaviour
     {
         if(!readyToSkill || attacking) return;
 
+        CooldownBar1.fillAmount = 0;
+
         attacking = true;
         readyToSkill = false;
+        onCooldown = true;
+        
+        if (onCooldown)
+        {
+            CooldownBar1.fillAmount += 1 / skillCooldown * Time.deltaTime;
+
+            if (CooldownBar1.fillAmount <= 1)
+            {
+                CooldownBar1.fillAmount = 1;
+            }
+        }
 
         ChangeAnimationState(SKILL1);
 
@@ -292,25 +303,6 @@ public class PlayerController : MonoBehaviour
         Invoke(nameof(ResetCooldown), skillCooldown);
         Invoke(nameof(ResetAttack), SkillDelay);
         Destroy(projectile, 2);
-    }
-
-    private void skillCooldownBar()
-    {
-        if(Input.GetKeyDown(Skill1Key))
-        {
-            CooldownBar1.fillAmount = 0;
-            onCooldown = true;
-        }
-
-        if (onCooldown)
-        {
-            CooldownBar1.fillAmount += 1 / skillCooldown * Time.deltaTime;
-
-            if (CooldownBar1.fillAmount <= 1)
-            {
-                CooldownBar1.fillAmount = 1;
-            }
-        }
     }
 
     private void ResetCooldown()
