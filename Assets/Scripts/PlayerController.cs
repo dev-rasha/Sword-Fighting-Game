@@ -256,6 +256,20 @@ public class PlayerController : MonoBehaviour
         } 
     }  
 
+    IEnumerator IncrementCooldownBar()
+    {
+        float incrementAmount = 0.01f;
+        float targetFillAmount = 1f;
+
+        while (CooldownBar1.fillAmount < targetFillAmount)
+        {
+            CooldownBar1.fillAmount += incrementAmount;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        CooldownBar1.fillAmount = targetFillAmount;
+    }
+
     void Skills()
     {
         if(!readyToSkill || attacking) return;
@@ -268,12 +282,15 @@ public class PlayerController : MonoBehaviour
         
         if (onCooldown)
         {
-            CooldownBar1.fillAmount += 1 / skillCooldown * Time.deltaTime;
+            StartCoroutine(IncrementCooldownBar());
+            // CooldownBar1.fillAmount += 1 / skillCooldown * Time.deltaTime;
 
-            if (CooldownBar1.fillAmount <= 1)
-            {
-                CooldownBar1.fillAmount = 1;
-            }
+            // if (CooldownBar1.fillAmount <= 1)
+            // {
+            //     CooldownBar1.fillAmount = 1;
+            // }
+
+
         }
 
         ChangeAnimationState(SKILL1);
