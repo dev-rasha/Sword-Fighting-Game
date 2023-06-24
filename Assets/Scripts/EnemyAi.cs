@@ -15,6 +15,10 @@ public class EnemyAi : MonoBehaviour
 
     public float health;
 
+    public int enemyCount;
+
+    public GameObject GameOverUI;
+
     public float attackDelay = 0.4f;
 
     public int attackDamage = 10;
@@ -34,6 +38,11 @@ public class EnemyAi : MonoBehaviour
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+
+    void Start()
+    {
+        GameOverUI.SetActive(false);
+    }
 
     private void Awake()
     {
@@ -153,6 +162,13 @@ public class EnemyAi : MonoBehaviour
     private void DestroyEnemy()
     {
         Destroy(gameObject);
+
+        enemyCount -= 1;
+
+        if(enemyCount == 0)
+        {
+            GameOverUI.SetActive(true);
+        }
     }
 
     void DamageThePlayer()
