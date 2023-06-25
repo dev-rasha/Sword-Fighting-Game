@@ -258,30 +258,30 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator IncrementCooldownBar()
     {
-        // float incrementAmount = 0.02f;
-        // float targetFillAmount = 1f;    
+        float incrementAmount = 0.02f;
+        float targetFillAmount = 1f;    
 
-        // while (CooldownBar1.fillAmount < targetFillAmount)
-        // {
-        //     yield return new WaitForSeconds(0.1f);
-        //     CooldownBar1.fillAmount += incrementAmount;
-        // }
-
-        // CooldownBar1.fillAmount = targetFillAmount;
-
-
-        float targetFillAmount = 1f;
-        float totalTime = 5f;
-        float incrementAmount = targetFillAmount / totalTime;
-        float waitTime = totalTime / (targetFillAmount / incrementAmount);
-        
         while (CooldownBar1.fillAmount < targetFillAmount)
         {
-            yield return new WaitForSeconds(waitTime);
+            yield return new WaitForSeconds(0.01f);
             CooldownBar1.fillAmount += incrementAmount;
         }
 
         CooldownBar1.fillAmount = targetFillAmount;
+
+
+        // float targetFillAmount = 1f;
+        // float totalTime = 5f;
+        // float incrementAmount = targetFillAmount / totalTime;
+        // float waitTime = totalTime / (targetFillAmount / incrementAmount);
+        
+        // while (CooldownBar1.fillAmount < targetFillAmount)
+        // {
+        //     yield return new WaitForSeconds(waitTime);
+        //     CooldownBar1.fillAmount += incrementAmount;
+        // }
+
+        // CooldownBar1.fillAmount = targetFillAmount;
     }
 
     void Skills()

@@ -9,4 +9,9 @@ public class ButtonManagement : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

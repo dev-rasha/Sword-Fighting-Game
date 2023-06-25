@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyAi : MonoBehaviour
 {
@@ -33,6 +34,10 @@ public class EnemyAi : MonoBehaviour
     public int attackDamage = 10;
 
     public Animator animator;
+
+    public Image HealthbarBoss;
+
+    public bool boss = false;
 
     //Patroling
     public Vector3 walkPoint;
@@ -165,6 +170,11 @@ public class EnemyAi : MonoBehaviour
     {
         health -= damage;
 
+        if(boss)
+        {
+            HealthbarBoss.fillAmount = health / 500f;
+        }
+
         if (health <= 0) 
         Invoke(nameof(DestroyEnemy), 0.1f);
     }
@@ -177,9 +187,18 @@ public class EnemyAi : MonoBehaviour
         if(enemyCount == 0)
         {
             GameOverUI.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
          Debug.Log("Current enemyCount: " + enemyCount);
+
+        if(boss)
+        {
+            GameOverUI.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     void DamageThePlayer()
