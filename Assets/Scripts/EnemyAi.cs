@@ -5,6 +5,17 @@ using UnityEngine.AI;
 
 public class EnemyAi : MonoBehaviour
 {
+    // [SerializeField]
+    // private int enemyCount = 12;
+
+    // public int EnemyCount
+    // {
+    //     get { return enemyCount; }
+    //     set { enemyCount = value; }
+    // }
+
+    public static int enemyCount = 12;
+
     public NavMeshAgent agent;
 
     public PlayerController p;
@@ -14,8 +25,6 @@ public class EnemyAi : MonoBehaviour
     public LayerMask whatIsGround, whatIsPlayer;
 
     public float health;
-
-    public int enemyCount;
 
     public GameObject GameOverUI;
 
@@ -169,6 +178,8 @@ public class EnemyAi : MonoBehaviour
         {
             GameOverUI.SetActive(true);
         }
+
+         Debug.Log("Current enemyCount: " + enemyCount);
     }
 
     void DamageThePlayer()
